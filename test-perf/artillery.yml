@@ -2,6 +2,7 @@ config:
   target: "http://78.46.40.15/v1"
   http:
     timeout: 240
+  processor: "./artillery-custom-logic.cjs"
 
   phases:
     - name: "POST measurement"
@@ -20,3 +21,15 @@ scenarios:
               packets: 16
             limit: "{{ $processEnvironment.LIMIT }}"
             locations: []
+          capture:
+            json: "$.id"
+            as: "id"
+      - think: 3
+      - loop:
+          - think: 1
+          - get:
+              url: "/measurements/{{ id }}"
+              capture:
+                - json: $.status
+                  as: "status"
+        whileTrue: "statusFinished"
