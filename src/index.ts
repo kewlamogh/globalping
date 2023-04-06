@@ -1,6 +1,6 @@
 import process from 'node:process';
 import cluster from 'node:cluster';
-import physicalCpuCount from 'physical-cpu-count';
+// import physicalCpuCount from 'physical-cpu-count';
 import { scopedLogger } from './lib/logger.js';
 import { createServer } from './lib/server.js';
 
@@ -16,9 +16,9 @@ const workerFn = async () => {
 };
 
 if (cluster.isPrimary) {
-	logger.info(`Master ${process.pid} is running with ${physicalCpuCount} workers`);
+	logger.info(`Master ${process.pid} is running with ${2} workers`);
 
-	for (let i = 0; i < physicalCpuCount; i++) {
+	for (let i = 0; i < 2; i++) {
 		cluster.fork();
 	}
 

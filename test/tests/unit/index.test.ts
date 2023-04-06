@@ -20,7 +20,7 @@ describe('index file', () => {
 	it('master should fork a worker for each physical CPU', async () => {
 		await import('../../../src/index.js');
 
-		expect(cluster.fork.callCount).to.equal(4);
+		expect(cluster.fork.callCount).to.equal(2);
 	});
 
 	it('master should restart a worker if it dies', async () => {
